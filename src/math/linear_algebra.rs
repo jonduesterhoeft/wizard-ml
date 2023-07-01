@@ -18,23 +18,23 @@ fn array_builder(n: usize) -> Float64Array {
 pub fn dot(a: &Float64Array, b: &Float64Array) -> Result<Float64Array, ArrowError> {
     let v_multiply_result = arrow::compute::multiply(a, b)?;
     let v_dot_result = arrow::compute::sum(&v_multiply_result)?;
-    Ok(v_dot_result)
+    v_dot_result
 }
 
 pub fn sum_of_squares(a: &Float64Array) -> Result<Float64Array, ArrowError> {
     let v_sum_of_squares_result = dot(a, a)?;
-    Ok(v_sum_of_squares_result)
+    v_sum_of_squares_result
 }
 
 pub fn magnitude(a: &Float64Array) -> Result<Float64Array, ArrowError> {
     let v_magnitude_result = sum_of_squares(a).sqrt()?;
-    Ok(v_magnitude_result)
+    v_magnitude_result
 }
 
 pub fn distance(a: &Float64Array, b: &Float64Array) -> Result<Float64Array, ArrowError> {
     let v_subtract_result = arrow::compute::subtract(a, b)?;
     let v_distance_result = magnitude(&v_subtract_result)?;
-    Ok(v_distance_result)
+    v_distance_result
 }
 
 #[cfg(test)]
