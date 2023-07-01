@@ -32,7 +32,6 @@ pub fn magnitude(a: &Float64Array) -> Option<<T as ArrowPrimitiveType>::Native> 
         Ok(result) => result.sqrt(),
         Err(err) => err
     }
-    }
 }
 
 pub fn distance(a: &Float64Array, b: &Float64Array) -> Option<<T as ArrowPrimitiveType>::Native> {
