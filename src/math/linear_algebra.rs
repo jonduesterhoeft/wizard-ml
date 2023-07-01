@@ -2,7 +2,7 @@ use arrow::array::Float64Array;
 use arrow::array::Float64Builder;
 
 /// Initializes an m x n matrix to zero.
-fn array_builder(m: usize: n: usize) -> Float64Array {
+fn array_builder(m: usize, n: usize) -> Float64Array {
 
     // Initialize array builder with capacity for n items
     let mut primitive_array_builder = Float64Builder::with_capacity(m);
