@@ -9,11 +9,6 @@ fn array_builder(m: usize, n: usize) -> Float64Array {
         primitive_array_builder.append_value(0.0).unwrap();
     }
 
-    let values = (0..n)
-        .collect::<Vec<f64>>();
-
-    // Append slice of values to array
-    primitive_array_builder.append_slice(&values).unwrap();
     // Consume builder and convert to arry
     primitive_array_builder.finish()
 }
@@ -62,10 +57,10 @@ mod tests {
 
     #[test]
     fn test_array_builder() {
-        let m: usize = 2;
         let n: usize = 3;
-        let array = array_builder(m, n);
-        println!("{:?}", array);
-        // assert_eq!(test_data, expected);
+        let array = array_builder(n);
+        assert_eq!(array.len(), n);
+        assert_eq!(array.value(0), 0.0);
+        assert_eq!(array.is_null(n - 1), false);
     }
 }
