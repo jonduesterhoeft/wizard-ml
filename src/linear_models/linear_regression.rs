@@ -1,3 +1,3 @@
 fn hello () {
-    println!!("Hello World!")
+    println!!("Hello World")
 }
