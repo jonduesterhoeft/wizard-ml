@@ -7,7 +7,7 @@ fn array_builder(n: usize) -> Float64Array {
     let mut primitive_array_builder = Float64Builder::with_capacity(n);
 
     for _ in 0..n {
-        primitive_array_builder.append_value(0.0).unwrap();
+        primitive_array_builder.append_value(0.0);
     }
 
     // Consume builder and convert to arry
