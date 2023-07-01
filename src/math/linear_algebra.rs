@@ -1,5 +1,4 @@
-use arrow::array::Float64Array;
-use arrow::array::Float64Builder;
+use arrow::array::{Array, PrimitiveArray, Float64Array, Float64Builder, BufferBuilder}
 
 /// Initializes an m x n matrix to zero.
 fn array_builder(n: usize) -> Float64Array {
