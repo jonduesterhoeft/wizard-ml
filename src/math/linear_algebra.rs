@@ -23,7 +23,7 @@ pub fn dot(a: &Float64Array, b: &Float64Array) -> Result<Option<f64>, ArrowError
 }
 
 pub fn sum_of_squares(a: &Float64Array) -> Result<Option<f64>, ArrowError> {
-    let v_sum_of_squares_result = dot(a, a);
+    let v_sum_of_squares_result = dot(a, a)?;
     Ok(v_sum_of_squares_result)
 }
 
@@ -34,7 +34,7 @@ pub fn magnitude(a: &Float64Array) -> Result<Option<f64>, ArrowError> {
 
 pub fn distance(a: &Float64Array, b: &Float64Array) -> Result<Option<f64>, ArrowError> {
     let v_subtract_result = arrow::compute::subtract(a, b)?;
-    let v_distance_result = magnitude(&v_subtract_result);
+    let v_distance_result = magnitude(&v_subtract_result)?;
     Ok(v_distance_result)
 }
 
