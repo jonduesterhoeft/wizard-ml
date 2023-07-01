@@ -16,9 +16,9 @@ fn array_builder(n: usize) -> Float64Array {
     primitive_array_builder.finish()
 }
 
-pub fn dot(a: &Float64Array, b: &Float64Array) -> Option<<ArrowPrimitiveType>::Native> {
-    let v_multiply_result = arrow::compute::multiply(a, b)?;
-    let v_dot_result = arrow::compute::sum(&v_multiply_result)?;
+pub fn dot(a: &Float64Array, b: &Float64Array) -> Result<Option<ArrowNumbericType as ArrowPrimitiveType>::Native, ArrowError> {
+    let v_multiply_result = arrow::compute::multiply_checked(a, b)?;
+    let v_dot_result = arrow::compute::sum_checked(&v_multiply_result)?;
     v_dot_result
 }
 
