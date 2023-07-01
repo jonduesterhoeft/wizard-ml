@@ -16,18 +16,18 @@ fn array_builder(n: usize) -> Float64Array {
     primitive_array_builder.finish()
 }
 
-pub fn dot(a: &Float64Array, b: &Float64Array) -> Result<Option<<ArrowPrimitiveType>::Native>, ArrowError> {
+pub fn dot(a: &Float64Array, b: &Float64Array) -> Result<Option<f64>, ArrowError> {
     let v_multiply_result = arrow::compute::multiply_checked(a, b)?;
     let v_dot_result = arrow::compute::sum_checked(&v_multiply_result)?;
     v_dot_result
 }
 
-pub fn sum_of_squares(a: &Float64Array) -> Result<Option<<ArrowPrimitiveType>::Native>, ArrowError> {
+pub fn sum_of_squares(a: &Float64Array) -> Result<Option<f64>, ArrowError> {
     let v_sum_of_squares_result = dot(a, a);
     v_sum_of_squares_result
 }
 
-pub fn magnitude(a: &Float64Array) -> Result<Option<<ArrowPrimitiveType>::Native>, ArrowError> {
+pub fn magnitude(a: &Float64Array) -> Result<Option<f64>, ArrowError> {
     let v_magnitude_result = sum_of_squares(a)?;
     match v_magnitude_result {
         Ok(result) => result.sqrt(),
@@ -35,7 +35,7 @@ pub fn magnitude(a: &Float64Array) -> Result<Option<<ArrowPrimitiveType>::Native
     }
 }
 
-pub fn distance(a: &Float64Array, b: &Float64Array) -> Result<Option<<ArrowPrimitiveType>::Native>, ArrowError> {
+pub fn distance(a: &Float64Array, b: &Float64Array) -> Result<f64>, ArrowError> {
     let v_subtract_result = arrow::compute::subtract(a, b)?;
     let v_distance_result = magnitude(&v_subtract_result);
     v_distance_result
