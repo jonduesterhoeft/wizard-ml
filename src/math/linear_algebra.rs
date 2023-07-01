@@ -1,4 +1,4 @@
-use arrow::array::{Array, PrimitiveArray, Float64Array, Float64Builder, BufferBuilder};
+use arrow::array::{Array, PrimitiveArray, Float64Array, Float64Builder, BufferBuilder, ArrowError};
 
 /// Initializes an m x n matrix to zero.
 fn array_builder(n: usize) -> Float64Array {
@@ -14,20 +14,26 @@ fn array_builder(n: usize) -> Float64Array {
     primitive_array_builder.finish()
 }
 
-pub fn dot(a: &Float64Array, b: &Float64Array) -> Float64Array {
-    arrow::compute::sum(arrow::compute::multiply(a, b))
+pub fn dot(a: &Float64Array, b: &Float64Array) -> Result<Float64Array, ArrowError> {
+    let v_multiply_result = arrow::compute::multiply(a, b)?;
+    let v_dot_result = arrow::compute::sum(v_multiply_result)?;
+    Ok(v_dot_result)
 }
 
-pub fn sum_of_squares(a: &Float64Array) -> Float64Array {
-    dot(a, a)
+pub fn sum_of_squares(a: &Float64Array) -> Result<Float64Array, ArrowError> {
+    let v_sum_of_squares_result = dot(a, a)?;
+    Ok(v_sum_of_squares_result)
 }
 
-pub fn magnitude(a: &Float64Array) -> Float64Array {
-    sqrt(sum_of_squares(a))
+pub fn magnitude(a: &Float64Array) -> Result<Float64Array, ArrowError> {
+    let v_magnitude_result = sum_of_squares(a).sqrt()?;
+    Ok(v_magnitude_result)
 }
 
-pub fn distance(a: &Float64Array, b: &Float64Array) -> Float64Array {
-    magnitude(arrow::compute::subtract(a, b))
+pub fn distance(a: &Float64Array, b: &Float64Array) -> Result<Float64Array, ArrowError> {
+    let v_subtract_result = arrow::compute::subtract(a, b)?;
+    let v_distance_result = magnitude(v_subtract_result)?;
+    Ok(v_distance_result)
 }
 
 #[cfg(test)]
@@ -49,6 +55,10 @@ mod tests {
         let a = Float64Array::from(vec![1, 2]);
         let b = Float64Array::from(vec![3, 4]);
         let result = dot(a, b);
+        match result {
+            Ok(result) => result,
+            Err(error) => error
+        }
         assert_eq!(result, 11.0)
     }
 
@@ -56,6 +66,10 @@ mod tests {
     fn test_sum_of_squares() {
         let a = Float64Array::from(vec![1, 2, 3]);
         let result = sum_of_squares(a);
+        match result {
+            Ok(result) => result,
+            Err(error) => error
+        }
         assert_eq!(result, 14)
     }
 
@@ -63,7 +77,11 @@ mod tests {
     fn test_magnitude() {
         let a = Float64Array::from(vec![1, 2, 3]);
         let result = magnitude(a);
-        assert_eq!(result, sqrt(14))
+        match result {
+            Ok(result) => result,
+            Err(error) => error
+        }
+        assert_eq!(result, (14 as f64).sqrt()))
     }
 
     #[test]
@@ -71,6 +89,10 @@ mod tests {
         let a = Float64Array::from(vec![1, 2, 3]);
         let b = Float64Array::from(vec![3, 2, 1]);
         let result = distance(a, b);
-        assert_eq!(result, sqrt(8))
+        match result {
+            Ok(result) => result,
+            Err(error) => error
+        }
+        assert_eq!(result, (8 as f64).sqrt())
     }
 }
