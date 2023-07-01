@@ -17,7 +17,7 @@ fn array_builder(n: usize) -> Float64Array {
 
 pub fn dot(a: &Float64Array, b: &Float64Array) -> Result<Float64Array, ArrowError> {
     let v_multiply_result = arrow::compute::multiply(a, b)?;
-    let v_dot_result = arrow::compute::sum(v_multiply_result)?;
+    let v_dot_result = arrow::compute::sum(&v_multiply_result)?;
     Ok(v_dot_result)
 }
 
@@ -33,7 +33,7 @@ pub fn magnitude(a: &Float64Array) -> Result<Float64Array, ArrowError> {
 
 pub fn distance(a: &Float64Array, b: &Float64Array) -> Result<Float64Array, ArrowError> {
     let v_subtract_result = arrow::compute::subtract(a, b)?;
-    let v_distance_result = magnitude(v_subtract_result)?;
+    let v_distance_result = magnitude(&v_subtract_result)?;
     Ok(v_distance_result)
 }
 
@@ -55,7 +55,7 @@ mod tests {
     fn test_dot_product() {
         let a = Float64Array::from(vec![1, 2]);
         let b = Float64Array::from(vec![3, 4]);
-        let result = dot(a, b);
+        let result = dot(&a, &b);
         match result {
             Ok(result) => result,
             Err(error) => error
@@ -66,7 +66,7 @@ mod tests {
     #[test]
     fn test_sum_of_squares() {
         let a = Float64Array::from(vec![1, 2, 3]);
-        let result = sum_of_squares(a);
+        let result = sum_of_squares(&a);
         match result {
             Ok(result) => result,
             Err(error) => error
@@ -77,7 +77,7 @@ mod tests {
     #[test]
     fn test_magnitude() {
         let a = Float64Array::from(vec![1, 2, 3]);
-        let result = magnitude(a);
+        let result = magnitude(&a);
         match result {
             Ok(result) => result,
             Err(error) => error
@@ -89,7 +89,7 @@ mod tests {
     fn test_distance() {
         let a = Float64Array::from(vec![1, 2, 3]);
         let b = Float64Array::from(vec![3, 2, 1]);
-        let result = distance(a, b);
+        let result = distance(&a, &b);
         match result {
             Ok(result) => result,
             Err(error) => error
