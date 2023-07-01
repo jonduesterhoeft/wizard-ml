@@ -1,11 +1,11 @@
 use arrow::*;
 
-fn array_builder(m: usize, n: usize) -> Float64Array {
+fn array_builder(n: usize) -> Float64Array {
 
     // Initialize array builder
-    let mut primitive_array_builder = Float64Builder::new(m);
+    let mut primitive_array_builder = Float64Builder::new(n);
 
-    for _ in 0..m {
+    for _ in 0..n {
         primitive_array_builder.append_value(0.0).unwrap();
     }
 
@@ -15,7 +15,9 @@ fn array_builder(m: usize, n: usize) -> Float64Array {
 
 fn vec_add(v: &Float64Array, w: &Float64Array) -> &Float64Array {
     // TODO assert v.len() == w.len()
-    let mut r = array_builder(v.len(), 1);  // Build vector
+    let mut r = array_builder(v.len());  // Build vector
+
+
     
 }
 
