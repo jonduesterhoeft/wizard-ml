@@ -54,8 +54,8 @@ mod tests {
 
     #[test]
     fn test_dot_product() {
-        let a = Float64Array::from(vec![1, 2]);
-        let b = Float64Array::from(vec![3, 4]);
+        let a = Float64Array::from(vec![1.0, 2.0]);
+        let b = Float64Array::from(vec![3.0, 4.0]);
         let result = dot(&a, &b);
         match result {
             Ok(result) => result,
@@ -66,18 +66,18 @@ mod tests {
 
     #[test]
     fn test_sum_of_squares() {
-        let a = Float64Array::from(vec![1, 2, 3]);
+        let a = Float64Array::from(vec![1.0, 2.0, 3.0]);
         let result = sum_of_squares(&a);
         match result {
             Ok(result) => result,
             Err(error) => error
         }
-        assert_eq!(result, 14)
+        assert_eq!(result, 14.0)
     }
 
     #[test]
     fn test_magnitude() {
-        let a = Float64Array::from(vec![1, 2, 3]);
+        let a = Float64Array::from(vec![1.0, 2.0, 3.0]);
         let result = magnitude(&a);
         match result {
             Ok(result) => result,
@@ -88,8 +88,8 @@ mod tests {
 
     #[test]
     fn test_distance() {
-        let a = Float64Array::from(vec![1, 2, 3]);
-        let b = Float64Array::from(vec![3, 2, 1]);
+        let a = Float64Array::from(vec![1.0, 2.0, 3.0]);
+        let b = Float64Array::from(vec![3.0, 2.0, 1.0]);
         let result = distance(&a, &b);
         match result {
             Ok(result) => result,
