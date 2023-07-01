@@ -16,18 +16,18 @@ fn array_builder(n: usize) -> Float64Array {
     primitive_array_builder.finish()
 }
 
-pub fn dot(a: &Float64Array, b: &Float64Array) -> Option<<T as ArrowPrimitiveType>::Native> {
+pub fn dot(a: &Float64Array, b: &Float64Array) -> Option<<ArrowPrimitiveType>::Native> {
     let v_multiply_result = arrow::compute::multiply(a, b)?;
     let v_dot_result = arrow::compute::sum(&v_multiply_result)?;
     v_dot_result
 }
 
-pub fn sum_of_squares(a: &Float64Array) -> Option<<T as ArrowPrimitiveType>::Native> {
+pub fn sum_of_squares(a: &Float64Array) -> Option<<ArrowPrimitiveType>::Native> {
     let v_sum_of_squares_result = dot(a, a);
     v_sum_of_squares_result
 }
 
-pub fn magnitude(a: &Float64Array) -> Option<<T as ArrowPrimitiveType>::Native> {
+pub fn magnitude(a: &Float64Array) -> Option<<ArrowPrimitiveType>::Native> {
     let v_magnitude_result = sum_of_squares(a)?;
     match v_magnitude_result {
         Ok(result) => result.sqrt(),
