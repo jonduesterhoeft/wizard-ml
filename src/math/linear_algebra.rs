@@ -81,7 +81,7 @@ mod tests {
             Ok(result) => result,
             Err(error) => error
         }
-        assert_eq!(result, (14 as f64).sqrt()))
+        assert_eq!(result, (14 as f64).sqrt())
     }
 
     #[test]
