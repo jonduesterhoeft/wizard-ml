@@ -10,7 +10,6 @@ fn array_builder(m: usize, n: usize) -> Float64Array {
     }
 
     let values = (0..n)
-        .map(|_|)
         .collect::<Vec<f64>>();
 
     // Append slice of values to array
