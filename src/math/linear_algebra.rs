@@ -1,4 +1,4 @@
-use arrow::array::{Array, PrimitiveArray, Float64Array, Float64Builder, BufferBuilder}
+use arrow::array::{Array, PrimitiveArray, Float64Array, Float64Builder, BufferBuilder};
 
 /// Initializes an m x n matrix to zero.
 fn array_builder(n: usize) -> Float64Array {
@@ -7,7 +7,7 @@ fn array_builder(n: usize) -> Float64Array {
     let mut primitive_array_builder = Float64Builder::with_capacity(n);
 
     for _ in 0..n {
-        primitive_array_builder.append_value(0.0);
+        primitive_array_builder.append_value(0.0).unwrap();
     }
 
     // Consume builder and convert to arry
