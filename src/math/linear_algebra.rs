@@ -35,7 +35,7 @@ pub fn magnitude(a: &Float64Array) -> Result<Option<f64>, ArrowError> {
     }
 }
 
-pub fn distance(a: &Float64Array, b: &Float64Array) -> Result<f64>, ArrowError> {
+pub fn distance(a: &Float64Array, b: &Float64Array) -> Result<Option<f64>, ArrowError> {
     let v_subtract_result = arrow::compute::subtract(a, b)?;
     let v_distance_result = magnitude(&v_subtract_result);
     v_distance_result
