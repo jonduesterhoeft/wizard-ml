@@ -14,42 +14,20 @@ fn array_builder(n: usize) -> Float64Array {
     primitive_array_builder.finish()
 }
 
-fn vec_add(v: &Float64Array, w: &Float64Array) -> Float64Array {
-    // TODO assert v.len() == w.len()
-    let mut r = array_builder(v.len());  // Build vector
-    r
+pub fn dot(a: &Float64Array, b: &Float64Array) -> Float64Array {
+    arrow::compute::sum(arrow::compute::multiply(a, b))
 }
 
-fn vec_subtract() {
-
+pub fn sum_of_squares(a: &Float64Array) -> Float64Array {
+    dot(a, a)
 }
 
-fn vec_sum() {
-
+pub fn magnitude(a: &Float64Array) -> Float64Array {
+    sqrt(sum_of_squares(a))
 }
 
-fn scalar_multiply() {
-
-}
-
-fn vector_mean() {
-
-}
-
-fn dot() {
-
-}
-
-fn sum_of_squares() {
-
-}
-
-fn magnitude() {
-
-}
-
-fn distance() {
-
+pub fn distance(a: &Float64Array, b: &Float64Array) -> Float64Array {
+    magnitude(arrow::compute::subtract(a, b))
 }
 
 #[cfg(test)]
@@ -64,5 +42,35 @@ mod tests {
         assert_eq!(array.len(), n);
         assert_eq!(array.value(0), 0.0);
         assert_eq!(array.is_null(n - 1), false);
+    }
+
+    #[test]
+    fn test_dot_product() {
+        let a = Float64Array::from(vec![1, 2]);
+        let b = Float64Array::from(vec![3, 4]);
+        let result = dot(a, b);
+        assert_eq!(result, 11.0)
+    }
+
+    #[test]
+    fn test_sum_of_squares() {
+        let a = Float64Array::from(vec![1, 2, 3]);
+        let result = sum_of_squares(a);
+        assert_eq!(result, 14)
+    }
+
+    #[test]
+    fn test_magnitude() {
+        let a = Float64Array::from(vec![1, 2, 3]);
+        let result = magnitude(a);
+        assert_eq!(result, sqrt(14))
+    }
+
+    #[test]
+    fn test_distance() {
+        let a = Float64Array::from(vec![1, 2, 3]);
+        let b = Float64Array::from(vec![3, 2, 1]);
+        let result = distance(a, b);
+        assert_eq!(result, sqrt(8))
     }
 }
