@@ -62,6 +62,7 @@ mod tests {
                 match result {
                     Some(result) => result,
                     None => None
+                    }
                 }
             Err(error) => error
         }
