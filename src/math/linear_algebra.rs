@@ -58,7 +58,11 @@ mod tests {
         let b = Float64Array::from(vec![3.0, 4.0]);
         let result = dot(&a, &b);
         match result {
-            Ok(result) => result,
+            Ok(result) => {
+                match result {
+                    Some(result) => result,
+                    None => None
+                }
             Err(error) => error
         }
         assert_eq!(result, 11.0)
